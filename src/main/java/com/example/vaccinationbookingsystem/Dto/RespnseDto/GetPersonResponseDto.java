@@ -1,8 +1,6 @@
-package com.example.vaccinationbookingsystem.Dto.RequestDto;
+package com.example.vaccinationbookingsystem.Dto.RespnseDto;
 
 import com.example.vaccinationbookingsystem.Enum.Gender;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -11,12 +9,8 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @Getter
 @Setter
-public class AddDoctorReqestDto {
-
-    int age;
+public class GetPersonResponseDto {
+    int id;
     String name;
-    String email;
-    int centerId;
     Gender gender;
-
 }

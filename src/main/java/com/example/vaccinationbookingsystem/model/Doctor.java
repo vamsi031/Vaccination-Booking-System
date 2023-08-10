@@ -34,4 +34,9 @@ public class Doctor {
 
     @OneToMany(mappedBy = "doctor")
     List<Appointment> appointmentList = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn
+    VaccinationCenter center;
+
 }

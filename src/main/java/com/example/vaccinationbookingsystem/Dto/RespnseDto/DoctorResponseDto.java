@@ -8,7 +8,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @Getter
 @Setter
-public class GetMalePersonResponseDto {
-    int id;
+public class DoctorResponseDto {
     String name;
+    int doctorId;
 }

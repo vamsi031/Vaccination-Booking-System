@@ -2,7 +2,7 @@ package com.example.vaccinationbookingsystem.service;
 
 import com.example.vaccinationbookingsystem.Dto.RequestDto.AddPersonRequestDto;
 import com.example.vaccinationbookingsystem.Dto.RespnseDto.AddPersonResponseDto;
-import com.example.vaccinationbookingsystem.Dto.RespnseDto.GetMalePersonResponseDto;
+import com.example.vaccinationbookingsystem.Dto.RespnseDto.GetPersonResponseDto;
 import com.example.vaccinationbookingsystem.model.Person;
 import com.example.vaccinationbookingsystem.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,17 +45,74 @@ public class PersonService {
 
     }
 
-    public List<GetMalePersonResponseDto> getAllMaleOfAgeGreaterThan(int age) {
-        List<GetMalePersonResponseDto> malePersonList = new ArrayList<>();
+    public List<GetPersonResponseDto> getAllMaleOfAgeGreaterThan(int age) {
+        List<GetPersonResponseDto> malePersonList = new ArrayList<>();
         List<Person> personList = personRepository.findAll();
         for(Person person:personList){
 
             String gender = String.valueOf(person.getGender());
             if(gender.equals("MALE") && person.getAge()>age){
 
-                malePersonList.add(new GetMalePersonResponseDto(person.getId(), person.getName()));
+                malePersonList.add(new GetPersonResponseDto(person.getId(), person.getName(),person.getGender()));
             }
         }
         return malePersonList;
+    }
+
+    public List<GetPersonResponseDto> getAllFemalesOnlytakenDose1(int age) {
+        List<GetPersonResponseDto>  list = new ArrayList<>();
+        List<Person> personsList = personRepository.findAll();
+        for(Person person:personsList){
+            if(person.isDoseTwoTaken() && !person.isDoseTwoTaken()){
+                list.add(new GetPersonResponseDto(person.getId(), person.getName(),person.getGender()));
+            }
+        }
+        return list;
+    }
+
+    public List<GetPersonResponseDto> getFullyVaccinatedPersons() {
+        List<GetPersonResponseDto> list = new ArrayList<>();
+        List<Person> personsList = personRepository.findAll();
+        for(Person person:personsList){
+            if(person.isDoseTwoTaken() && person.isDoseTwoTaken()){
+                list.add(new GetPersonResponseDto(person.getId(), person.getName(),person.getGender()));
+            }
+        }
+        return list;
+    }
+
+    public List<GetPersonResponseDto> getNotVaccinatedPersons() {
+        List<GetPersonResponseDto> list = new ArrayList<>();
+        List<Person> personsList = personRepository.findAll();
+        for(Person person:personsList){
+            if(!person.isDoseTwoTaken() && !person.isDoseTwoTaken()){
+                list.add(new GetPersonResponseDto(person.getId(), person.getName(),person.getGender()));
+            }
+        }
+        return list;
+    }
+
+    public List<GetPersonResponseDto> getFemaleWhoseAgeGreaterThanAndHaveDose1(int age) {
+        List<GetPersonResponseDto> list = new ArrayList<>();
+        List<Person> personsList = personRepository.findAll();
+        for(Person person:personsList){
+            if(person.getGender().equals("FEMALE") && person.isDoseTwoTaken()
+                    && !person.isDoseTwoTaken() && person.getAge()>age){
+                list.add(new GetPersonResponseDto(person.getId(), person.getName(),person.getGender()));
+            }
+        }
+        return list;
+    }
+
+    public List<GetPersonResponseDto> getAllMaleWhoseAgeGreatherThan(int age) {
+        List<GetPersonResponseDto> list = new ArrayList<>();
+        List<Person> personsList = personRepository.findAll();
+        for(Person person:personsList){
+            if(person.getGender().equals("MALE") && person.isDoseTwoTaken()
+                    && person.isDoseTwoTaken() && person.getAge()>age){
+                list.add(new GetPersonResponseDto(person.getId(), person.getName(),person.getGender()));
+            }
+        }
+        return list;
     }
 }
